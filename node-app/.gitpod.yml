@@ -3,3 +3,6 @@ tasks:
       echo 'TODO: build project'
     command: |
       echo 'TODO: start app'
+ports:
+  - port: 8080
+    visibility: public
