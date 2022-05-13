@@ -30,7 +30,7 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Hi. goto /api/users to get started" });
 });
 require("./app/routes/user.routes")(app);
 app.use(
@@ -39,10 +39,10 @@ app.use(
   swaggerUi.setup(swaggerDocument)
 );
 
-const outputFile = './swagger_output.json'
-const endpointsFiles = ['./app/routes/user.routes.js']
+// const outputFile = './swagger_output.json'
+// const endpointsFiles = ['./app/routes/user.routes.js']
 
-swaggerAutogen(outputFile, endpointsFiles)
+// swaggerAutogen(outputFile, endpointsFiles)
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
