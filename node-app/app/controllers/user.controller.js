@@ -1,17 +1,16 @@
+const { request } = require("express");
 const db = require("../models");
 const User = db.users;
 // Create and Save a new User
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.title) {
-        res.status(400).send({ message: "Content can not be empty!" });
-        return;
-    }
+   
     // Create a User
     const user = new User({
-        title: req.body.title,
-        description: req.body.description,
-        published: req.body.published ? req.body.published : false
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        age:req.body.age,
+        introduction:req.body.introduction
     });
     // Save User in the database
     user
@@ -29,9 +28,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-    User.find(condition)
+   
+    User.find()
         .then(data => {
             res.send(data);
         })
