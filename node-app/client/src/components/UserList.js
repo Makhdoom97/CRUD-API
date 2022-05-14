@@ -63,9 +63,11 @@ function UserList({ userData, reCallUserData }) {
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: '',
-      age: '',
+      _id:'',
+      firstName: '',
+      lastName: '',
       email: '',
+      age: '',
       introduction: '',
       ...record,
     });
@@ -73,7 +75,7 @@ function UserList({ userData, reCallUserData }) {
   };
   const deleted = (record) => {
     axios
-      .delete(`${BackendUrl}/user/delete/${record.email}`)
+      .delete(`${BackendUrl}/users/${record._id}`)
       .then(() => {
         message.success('User Deleted!');
         reCallUserData();
@@ -92,14 +94,14 @@ function UserList({ userData, reCallUserData }) {
       const row = await form.validateFields();
 
       await axios
-        .patch(`${BackendUrl}/user/update/${row.email}`, row)
+        .put(`${BackendUrl}/users/${key}`, row)
         .then(() => message.success('user updated!'))
         .catch((error) => {
           message.error(error.response.data.msg || 'Internal server error!');
         });
       const newData = [...data];
 
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex((item) => key === item._id);
 
       if (index > -1) {
         const item = newData[index];
@@ -111,26 +113,38 @@ function UserList({ userData, reCallUserData }) {
         setData(newData);
         setEditingKey('');
       }
-    } catch (errInfo) {}
+    } catch (errInfo) { }
   };
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      width: '25%',
+      title: 'ID',
+      dataIndex: '_id',
+      width: '15%',
+      editable: false,
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      width: '15%',
+      editable: true,
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      width: '15%',
       editable: true,
     },
     {
       title: 'Email',
       dataIndex: 'email',
-      width: '25%',
+      width: '20%',
       editable: true,
     },
     {
       title: 'Age',
       dataIndex: 'age',
-      width: '15%',
+      width: '10%',
       editable: true,
     },
     {
@@ -148,7 +162,7 @@ function UserList({ userData, reCallUserData }) {
           <span>
             <a
               href='javascript:;'
-              onClick={() => save(record.key)}
+              onClick={() => save(record._id)}
               style={{
                 marginRight: 8,
               }}>

@@ -1,11 +1,16 @@
 const swaggerAutogen = require("swagger-autogen")();
 require('dotenv').config();
+const path = require("path");
 
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
+
+//This will create a middleware.
+//When you navigate to the root page, it would use the built react-app
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 var corsOptions = {
   origin: "http://localhost:8081"
 };

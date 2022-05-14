@@ -12,7 +12,7 @@ function AddUser() {
   const onFinish = async (values) => {
     setLoading(true);
     await axios
-      .post(`${BackendUrl}/user/add`, values.user)
+      .post(`${BackendUrl}/users`, values.user)
       .then(() => {
         setLoading(false);
         message.success('User added successfully! ');
@@ -28,12 +28,23 @@ function AddUser() {
       <div className='form'>
         <Form name='nest-messages' onFinish={onFinish} form={form}>
           <Form.Item
-            name={['user', 'name']}
+            name={['user', 'firstName']}
             label='Name'
             rules={[
               {
                 required: true,
                 message: 'Name is required',
+              },
+            ]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'lastName']}
+            label='Name'
+            rules={[
+              {
+                required: true,
+                message: 'last Name is required',
               },
             ]}>
             <Input />
